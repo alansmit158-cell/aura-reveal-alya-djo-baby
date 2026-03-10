@@ -53,10 +53,20 @@ export default function RevealFinal({ result = 'boy' }) {
                                 rotate: [-1, 1, -1]
                             }}
                             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                            className="w-72 h-72 md:w-96 md:h-96 glass rounded-full flex flex-col items-center justify-center border-rose-gold/30 shadow-[0_0_80px_rgba(212,175,55,0.1)] relative"
+                            className="w-72 h-72 md:w-96 md:h-96 glass rounded-full flex flex-col items-center justify-center border-rose-gold/30 shadow-[0_0_80px_rgba(212,175,55,0.1)] relative overflow-hidden"
                         >
                             <div className="absolute inset-0 bg-white/20 blur-2xl rounded-full" />
-                            <span className="font-serif text-sm tracking-[0.6em] uppercase text-rose-gold mb-6 relative z-10">THE MOMENT</span>
+
+                            {/* Footprints Image */}
+                            <motion.img
+                                src="/assets/baby-feet.jpg"
+                                alt="Baby Footprints"
+                                initial={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="w-32 h-32 md:w-48 md:h-48 object-contain mb-4 relative z-10"
+                            />
+
+                            <span className="font-serif text-sm tracking-[0.6em] uppercase text-rose-gold mb-2 relative z-10">THE MOMENT</span>
                             <span className="font-sans text-2xl tracking-[0.3em] font-black text-gray-700 uppercase relative z-10">IS HERE</span>
                             <div className="absolute -bottom-8 w-1 h-32 bg-gradient-to-t from-transparent via-rose-gold/20 to-transparent" />
                         </motion.div>
