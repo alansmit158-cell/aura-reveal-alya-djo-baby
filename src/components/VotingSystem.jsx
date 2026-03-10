@@ -2,15 +2,19 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Baby, Heart } from 'lucide-react';
 
-export default function VotingSystem() {
+export default function VotingSystem({ onVote }) {
     const [hasVoted, setHasVoted] = useState(false);
-    const [counts, setCounts] = useState({ boy: 55, girl: 45 }); // Mock stats
+    const [name, setName] = useState('');
+    const [counts, setCounts] = useState({ boy: 55, girl: 45 }); // Mock stats for visuals
     const [selection, setSelection] = useState(null);
 
     const handleVote = (type) => {
+        if (!name.trim()) return;
         setSelection(type);
         setHasVoted(true);
-        // In real app, this would update Firebase
+        if (onVote) {
+            onVote({ name: name.trim(), choice: type });
+        }
     };
 
     const total = counts.boy + counts.girl;
@@ -41,37 +45,57 @@ export default function VotingSystem() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 relative">
                     <AnimatePresence mode="wait">
                         {!hasVoted ? (
-                            <>
-                                {/* Boy Vote Card */}
-                                <motion.button
-                                    key="vote-boy"
-                                    whileHover={{ y: -10, scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={() => handleVote('boy')}
-                                    className="glass group p-8 rounded-[32px] flex flex-col items-center gap-6 border-powder-blue/30 hover:shadow-powder-blue/20 transition-all duration-500"
+                            <div className="col-span-full space-y-12">
+                                {/* Name Input Field */}
+                                <motion.div
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    className="max-w-md mx-auto w-full"
                                 >
-                                    <div className="w-20 h-20 rounded-full bg-powder-blue/20 flex items-center justify-center text-powder-blue group-hover:scale-110 transition-transform">
-                                        <Baby className="w-10 h-10" />
-                                    </div>
-                                    <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Boy</span>
-                                    <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petit Prince</div>
-                                </motion.button>
+                                    <label className="block font-serif text-xs uppercase tracking-[0.3em] text-gray-400 mb-4 text-center">Votre Nom</label>
+                                    <input
+                                        type="text"
+                                        value={name}
+                                        onChange={(e) => setName(e.target.value)}
+                                        placeholder="Entrez votre nom ici..."
+                                        className="w-full glass bg-white/50 border border-rose-gold/20 rounded-2xl px-6 py-4 text-center outline-none focus:ring-2 focus:ring-rose-gold/30 transition-all font-serif text-lg text-gray-700"
+                                    />
+                                </motion.div>
 
-                                {/* Girl Vote Card */}
-                                <motion.button
-                                    key="vote-girl"
-                                    whileHover={{ y: -10, scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
-                                    onClick={() => handleVote('girl')}
-                                    className="glass group p-8 rounded-[32px] flex flex-col items-center gap-6 border-cotton-rose/30 hover:shadow-cotton-rose/20 transition-all duration-500"
-                                >
-                                    <div className="w-20 h-20 rounded-full bg-cotton-rose/20 flex items-center justify-center text-cotton-rose group-hover:scale-110 transition-transform">
-                                        <Heart className="w-10 h-10" />
-                                    </div>
-                                    <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Girl</span>
-                                    <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petite Princesse</div>
-                                </motion.button>
-                            </>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 opacity-transition transition-opacity duration-500" style={{ opacity: name.trim().length > 2 ? 1 : 0.4 }}>
+                                    {/* Boy Vote Card */}
+                                    <motion.button
+                                        key="vote-boy"
+                                        whileHover={name.trim().length > 2 ? { y: -10, scale: 1.02 } : {}}
+                                        whileTap={name.trim().length > 2 ? { scale: 0.98 } : {}}
+                                        onClick={() => handleVote('boy')}
+                                        disabled={name.trim().length <= 2}
+                                        className="glass group p-8 rounded-[32px] flex flex-col items-center gap-6 border-powder-blue/30 hover:shadow-powder-blue/20 transition-all duration-500 disabled:cursor-not-allowed"
+                                    >
+                                        <div className="w-20 h-20 rounded-full bg-powder-blue/20 flex items-center justify-center text-powder-blue group-hover:scale-110 transition-transform">
+                                            <Baby className="w-10 h-10" />
+                                        </div>
+                                        <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Boy</span>
+                                        <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petit Prince</div>
+                                    </motion.button>
+
+                                    {/* Girl Vote Card */}
+                                    <motion.button
+                                        key="vote-girl"
+                                        whileHover={name.trim().length > 2 ? { y: -10, scale: 1.02 } : {}}
+                                        whileTap={name.trim().length > 2 ? { scale: 0.98 } : {}}
+                                        onClick={() => handleVote('girl')}
+                                        disabled={name.trim().length <= 2}
+                                        className="glass group p-8 rounded-[32px] flex flex-col items-center gap-6 border-cotton-rose/30 hover:shadow-cotton-rose/20 transition-all duration-500 disabled:cursor-not-allowed"
+                                    >
+                                        <div className="w-20 h-20 rounded-full bg-cotton-rose/20 flex items-center justify-center text-cotton-rose group-hover:scale-110 transition-transform">
+                                            <Heart className="w-10 h-10" />
+                                        </div>
+                                        <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Girl</span>
+                                        <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petite Princesse</div>
+                                    </motion.button>
+                                </div>
+                            </div>
                         ) : (
                             <motion.div
                                 key="results"

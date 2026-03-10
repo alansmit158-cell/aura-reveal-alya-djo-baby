@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Baby, Heart, BarChart3, Settings } from 'lucide-react';
 
-export default function AdminPortal({ onRevealChange, currentResult }) {
+export default function AdminPortal({ onRevealChange, currentResult, votes = [] }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -76,7 +76,7 @@ export default function AdminPortal({ onRevealChange, currentResult }) {
                     <div className="flex gap-4">
                         <div className="glass px-6 py-3 rounded-2xl flex items-center gap-3">
                             <BarChart3 className="w-4 h-4 text-gray-400" />
-                            <span className="font-serif text-xl">128 <span className="text-sm text-gray-400 ml-1">Votes</span></span>
+                            <span className="font-serif text-xl">{votes.length} <span className="text-sm text-gray-400 ml-1">Votes</span></span>
                         </div>
                     </div>
                 </div>
@@ -135,6 +135,47 @@ export default function AdminPortal({ onRevealChange, currentResult }) {
                                 />
                             </div>
                         </div>
+                    </div>
+                </div>
+
+                {/* Detailed Vote Log */}
+                <div className="glass p-10 rounded-[48px] space-y-8">
+                    <div className="flex items-center gap-3">
+                        <BarChart3 className="w-5 h-5 text-rose-gold" />
+                        <h3 className="font-serif text-xl uppercase tracking-widest text-gray-600">Détails des Votes</h3>
+                    </div>
+
+                    <div className="overflow-x-auto">
+                        <table className="w-full text-left border-collapse">
+                            <thead>
+                                <tr className="border-b border-gray-100 font-serif text-xs uppercase tracking-widest text-gray-400">
+                                    <th className="py-4 px-4 font-normal">Nom</th>
+                                    <th className="py-4 px-4 font-normal">Choix</th>
+                                    <th className="py-4 px-4 font-normal">Heure</th>
+                                </tr>
+                            </thead>
+                            <tbody className="font-body text-gray-600">
+                                {votes.length > 0 ? (
+                                    votes.map((vote, idx) => (
+                                        <tr key={idx} className="border-b border-gray-50 hover:bg-nacre/30 transition-colors">
+                                            <td className="py-4 px-4 font-medium text-gray-800">{vote.name}</td>
+                                            <td className="py-4 px-4">
+                                                <span className={`px-3 py-1 rounded-full text-[10px] uppercase font-bold ${vote.choice === 'boy' ? 'bg-powder-blue/20 text-powder-blue' : 'bg-cotton-rose/20 text-cotton-rose'}`}>
+                                                    {vote.choice === 'boy' ? 'Petit Prince' : 'Petite Princesse'}
+                                                </span>
+                                            </td>
+                                            <td className="py-4 px-4 text-xs text-gray-400">
+                                                {new Date(vote.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <tr>
+                                        <td colSpan="3" className="py-12 text-center text-gray-400 font-serif italic">Aucun vote enregistré pour le moment.</td>
+                                    </tr>
+                                )}
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 

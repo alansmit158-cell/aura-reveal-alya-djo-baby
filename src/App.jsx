@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Lock } from 'lucide-react';
 import Layout from './components/Layout';
 import Hero from './components/Hero';
 import VotingSystem from './components/VotingSystem';
@@ -13,7 +14,12 @@ function App() {
   const [step, setStep] = useState('intro'); // 'intro', 'public', 'revealed'
   const [showAdmin, setShowAdmin] = useState(window.location.hash === '#reveal-admin');
   const [revealResult, setRevealResult] = useState('boy');
-  const revealDate = "2026-04-12T18:00:00"; // Example target date
+  const [votes, setVotes] = useState([]); // Array of { name, choice, timestamp }
+  const revealDate = "2026-04-12T18:00:00";
+
+  const handleVote = (newVote) => {
+    setVotes(prev => [...prev, { ...newVote, timestamp: new Date().toISOString() }]);
+  };
 
   // Quick hash navigation for testing/admin
   useEffect(() => {
@@ -30,6 +36,7 @@ function App() {
         <AdminPortal
           onRevealChange={(res) => setRevealResult(res)}
           currentResult={revealResult}
+          votes={votes}
         />
       </Layout>
     );
@@ -59,7 +66,7 @@ function App() {
             className="space-y-32 pb-32"
           >
             <Hero />
-            <VotingSystem />
+            <VotingSystem onVote={handleVote} />
             <Countdown targetDate={revealDate} onComplete={() => setStep('revealed')} />
           </motion.div>
         )}
@@ -72,6 +79,15 @@ function App() {
       </AnimatePresence>
 
       <AudioPlayer isRevealing={step === 'revealed'} result={revealResult} />
+
+      {/* Secret Admin Trigger - Very subtle */}
+      <button
+        onClick={() => window.location.hash = '#reveal-admin'}
+        className="fixed bottom-4 right-4 z-[9999] opacity-[0.02] hover:opacity-20 transition-all cursor-default"
+        title="Admin"
+      >
+        <Lock className="w-4 h-4 text-rose-gold" />
+      </button>
     </Layout>
   );
 }
