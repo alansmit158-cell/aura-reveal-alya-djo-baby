@@ -10,7 +10,7 @@ import AudioPlayer from './components/AudioPlayer';
 import RevealFinal from './components/RevealFinal';
 import AdminPortal from './components/AdminPortal';
 
-const API_BASE = 'http://localhost:5005/api/baby-reveal/aura-reveal';
+const API_BASE = '/api/baby-reveal/aura-reveal';
 
 function App() {
   const [step, setStep] = useState('intro'); // 'intro', 'public', 'revealed'
