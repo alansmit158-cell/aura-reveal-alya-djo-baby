@@ -36,7 +36,12 @@ export default function Countdown({ targetDate, onComplete }) {
 
     useEffect(() => {
         const calculateTimeLeft = () => {
-            const difference = +new Date(targetDate) - +new Date();
+            if (!targetDate) return;
+
+            const target = new Date(targetDate);
+            const now = new Date();
+            const difference = target.getTime() - now.getTime();
+
             let res = { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
             if (difference > 0) {
@@ -50,8 +55,8 @@ export default function Countdown({ targetDate, onComplete }) {
                 // Play chime on second change if active
                 if (res.seconds !== lastSecondRef.current) {
                     lastSecondRef.current = res.seconds;
-                    if (difference < 10000) { // Only last 10 seconds
-                        playChime(660); // Higher pitch for final countdown
+                    if (difference < 10000) {
+                        playChime(660);
                     }
                 }
             } else if (onComplete) {
@@ -106,10 +111,10 @@ export default function Countdown({ targetDate, onComplete }) {
                 </motion.div>
 
                 <div className="flex flex-wrap justify-center gap-6 md:gap-12 lg:gap-20 max-w-5xl mx-auto">
-                    <TimeBlock value={timeLeft.days || 0} label="Jours" delay={0.2} colorClass="balloon-3d-pink" />
-                    <TimeBlock value={timeLeft.hours || 0} label="Heures" delay={0.3} colorClass="balloon-3d-blue" />
-                    <TimeBlock value={timeLeft.minutes || 0} label="Minutes" delay={0.4} colorClass="balloon-3d-pink" />
-                    <TimeBlock value={timeLeft.seconds || 0} label="Secondes" delay={0.5} colorClass="balloon-3d-blue" />
+                    <TimeBlock value={timeLeft.days ?? 0} label="Jours" delay={0.2} colorClass="balloon-3d-pink" />
+                    <TimeBlock value={timeLeft.hours ?? 0} label="Heures" delay={0.3} colorClass="balloon-3d-blue" />
+                    <TimeBlock value={timeLeft.minutes ?? 0} label="Minutes" delay={0.4} colorClass="balloon-3d-pink" />
+                    <TimeBlock value={timeLeft.seconds ?? 0} label="Secondes" delay={0.5} colorClass="balloon-3d-blue" />
                 </div>
             </div>
         </section>

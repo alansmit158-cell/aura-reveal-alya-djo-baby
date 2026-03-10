@@ -7,6 +7,17 @@ export default function AdminPortal({ onConfigChange, currentResult, currentDate
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
+    // Local state for pending changes
+    const [localResult, setLocalResult] = useState(currentResult);
+    const [localDate, setLocalDate] = useState(currentDate);
+    const [isSaving, setIsSaving] = useState(false);
+
+    // Sync local state when props change (initial load)
+    useEffect(() => {
+        setLocalResult(currentResult);
+        setLocalDate(currentDate);
+    }, [currentResult, currentDate]);
+
     const handleLogin = (e) => {
         e.preventDefault();
         if (password === 'aura2026') {
@@ -17,19 +28,20 @@ export default function AdminPortal({ onConfigChange, currentResult, currentDate
         }
     };
 
-    const handleResultChange = (res) => {
+    const handleSave = async () => {
         if (onConfigChange) {
-            onConfigChange({ revealResult: res, revealDate: currentDate });
-        }
-    };
-
-    const handleDateChange = (e) => {
-        if (onConfigChange) {
-            onConfigChange({ revealDate: e.target.value, revealResult: currentResult });
+            setIsSaving(true);
+            try {
+                await onConfigChange({ revealResult: localResult, revealDate: localDate });
+                // Optional: show a temporary success state
+            } finally {
+                setIsSaving(false);
+            }
         }
     };
 
     if (!isAuthenticated) {
+        // ... (Login UI remains the same)
         return (
             <div className="min-h-screen flex items-center justify-center px-6">
                 <motion.div
@@ -85,11 +97,20 @@ export default function AdminPortal({ onConfigChange, currentResult, currentDate
                         <h1 className="font-serif text-5xl text-foreground">Aura Reveal Admin</h1>
                         <p className="font-serif text-rose-gold uppercase tracking-[0.4em] text-xs">Bonjour Alya & Djo</p>
                     </div>
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 items-center">
                         <div className="glass px-6 py-3 rounded-2xl flex items-center gap-3">
                             <BarChart3 className="w-4 h-4 text-gray-400" />
                             <span className="font-serif text-xl">{votes.length} <span className="text-sm text-gray-400 ml-1">Votes</span></span>
                         </div>
+
+                        {/* Final Save Button in Header */}
+                        <button
+                            onClick={handleSave}
+                            disabled={isSaving}
+                            className={`px-8 py-3 rounded-2xl bg-rose-gold text-white font-serif shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all flex items-center gap-2 ${isSaving ? 'opacity-50 cursor-not-allowed' : ''}`}
+                        >
+                            {isSaving ? 'Enregistrement...' : 'Enregistrer les modifications'}
+                        </button>
                     </div>
                 </div>
 
@@ -107,15 +128,15 @@ export default function AdminPortal({ onConfigChange, currentResult, currentDate
 
                         <div className="flex gap-4">
                             <button
-                                onClick={() => handleResultChange('boy')}
-                                className={`flex-1 flex flex-col items-center gap-4 p-6 rounded-3xl border transition-all ${currentResult === 'boy' ? 'bg-powder-blue text-white shadow-lg border-transparent' : 'bg-white/50 border-gray-100 text-gray-400'}`}
+                                onClick={() => setLocalResult('boy')}
+                                className={`flex-1 flex flex-col items-center gap-4 p-6 rounded-3xl border transition-all ${localResult === 'boy' ? 'bg-powder-blue text-white shadow-lg border-transparent' : 'bg-white/50 border-gray-100 text-gray-400'}`}
                             >
                                 <Baby className="w-8 h-8" />
                                 <span className="font-serif text-lg">C'est un Garçon</span>
                             </button>
                             <button
-                                onClick={() => handleResultChange('girl')}
-                                className={`flex-1 flex flex-col items-center gap-4 p-6 rounded-3xl border transition-all ${currentResult === 'girl' ? 'bg-cotton-rose text-white shadow-lg border-transparent' : 'bg-white/50 border-gray-100 text-gray-400'}`}
+                                onClick={() => setLocalResult('girl')}
+                                className={`flex-1 flex flex-col items-center gap-4 p-6 rounded-3xl border transition-all ${localResult === 'girl' ? 'bg-cotton-rose text-white shadow-lg border-transparent' : 'bg-white/50 border-gray-100 text-gray-400'}`}
                             >
                                 <Heart className="w-8 h-8" />
                                 <span className="font-serif text-lg">C'est une Fille</span>
@@ -135,8 +156,8 @@ export default function AdminPortal({ onConfigChange, currentResult, currentDate
                                 <label className="text-xs font-serif uppercase tracking-widest text-gray-400 px-2">Date du Reveal</label>
                                 <input
                                     type="datetime-local"
-                                    value={currentDate}
-                                    onChange={handleDateChange}
+                                    value={localDate}
+                                    onChange={(e) => setLocalDate(e.target.value)}
                                     className="w-full glass bg-white/50 border border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-rose-gold/30 transition-all font-serif"
                                 />
                             </div>

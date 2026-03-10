@@ -25,7 +25,13 @@ function App() {
       .then(data => {
         if (data.revealResult) setRevealResult(data.revealResult);
         if (data.votes) setVotes(data.votes);
-        if (data.revealDate) setRevealDate(data.revealDate);
+        if (data.revealDate) {
+          setRevealDate(data.revealDate);
+          // Auto-trigger reveal if date is already passed
+          if (new Date(data.revealDate) <= new Date()) {
+            setStep('revealed');
+          }
+        }
       })
       .catch(err => console.error("Fetch error:", err));
   }, []);
