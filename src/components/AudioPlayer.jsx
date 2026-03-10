@@ -2,55 +2,50 @@ import { useState, useRef, useEffect } from 'react';
 import { Volume2, VolumeX, Music } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export default function AudioPlayer({ isRevealing = false, result = 'boy' }) {
+export default function AudioPlayer({ isRevealing = false }) {
     const [isPlaying, setIsPlaying] = useState(false);
-    const backgroundMusicRef = useRef(null);
-    const revealMusicRef = useRef(null);
-    const [currentMode, setCurrentMode] = useState('background'); // 'background' or 'reveal'
+    const audioRef = useRef(null);
 
-    // Handle music transition when reveal starts
+    // Auto-play attempt on first interaction
     useEffect(() => {
-        if (isRevealing && currentMode === 'background') {
-            setCurrentMode('reveal');
-            if (isPlaying) {
-                backgroundMusicRef.current?.pause();
-                // Play reveal song after a short delay for the smoke explosion
-                setTimeout(() => {
-                    revealMusicRef.current?.play().catch(e => console.log("Audio reveal blocked", e));
-                }, 1000);
+        const handleInteraction = () => {
+            if (!isPlaying && audioRef.current) {
+                audioRef.current.play()
+                    .then(() => setIsPlaying(true))
+                    .catch(e => console.log("Autoplay still blocked", e));
             }
-        }
-    }, [isRevealing]);
+            window.removeEventListener('click', handleInteraction);
+            window.removeEventListener('touchstart', handleInteraction);
+        };
+
+        window.addEventListener('click', handleInteraction);
+        window.addEventListener('touchstart', handleInteraction);
+
+        return () => {
+            window.removeEventListener('click', handleInteraction);
+            window.removeEventListener('touchstart', handleInteraction);
+        };
+    }, [isPlaying]);
 
     const toggleAudio = () => {
-        const audio = currentMode === 'background' ? backgroundMusicRef.current : revealMusicRef.current;
         if (isPlaying) {
-            audio?.pause();
+            audioRef.current?.pause();
         } else {
-            audio?.play().catch(e => console.log("Audio playback blocked", e));
+            audioRef.current?.play().catch(e => console.log("Audio playback blocked", e));
         }
         setIsPlaying(!isPlaying);
     };
 
     return (
         <div className="fixed bottom-6 right-6 z-50">
-            {/* Background Sweet Lullaby */}
             <audio
-                ref={backgroundMusicRef}
+                ref={audioRef}
                 loop
                 src="/Empty Project (2).mp3"
             />
-            {/* Arabic Reveal Song Placeholder */}
-            <audio
-                ref={revealMusicRef}
-                src={result === 'boy'
-                    ? "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-17.mp3"
-                    : "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3"
-                }
-            />
 
             <motion.button
-                animate={isRevealing ? { scale: [1, 1.2, 1] } : {}}
+                animate={isRevealing && isPlaying ? { scale: [1, 1.2, 1] } : {}}
                 transition={{ duration: 1, repeat: Infinity }}
                 onClick={toggleAudio}
                 className="w-14 h-14 glass rounded-full flex items-center justify-center text-rose-gold shadow-rose-gold/20 shadow-xl group"
@@ -58,7 +53,7 @@ export default function AudioPlayer({ isRevealing = false, result = 'boy' }) {
                 <AnimatePresence mode="wait">
                     {isPlaying ? (
                         <motion.div key="playing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                            {currentMode === 'reveal' ? <Music className="w-6 h-6 animate-spin-slow" /> : <Volume2 className="w-6 h-6" />}
+                            <Volume2 className="w-6 h-6" />
                         </motion.div>
                     ) : (
                         <motion.div key="muted" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
