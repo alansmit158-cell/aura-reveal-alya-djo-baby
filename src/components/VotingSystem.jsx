@@ -97,8 +97,8 @@ export default function VotingSystem({ onVote, votes = [] }) {
                                             <Baby className="w-10 h-10" />
                                         </div>
                                         <div className="flex flex-col items-center gap-1">
-                                            <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Boy</span>
-                                            <span className="text-3xl text-powder-blue" style={{ fontFamily: 'Aref Ruqaa, serif' }}>ولد</span>
+                                            <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Little Prince</span>
+                                            <span className="text-3xl text-powder-blue" style={{ fontFamily: 'Aref Ruqaa, serif' }}>الأمير الصغير</span>
                                         </div>
                                         <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petit Prince</div>
                                     </motion.button>
@@ -116,8 +116,8 @@ export default function VotingSystem({ onVote, votes = [] }) {
                                             <Heart className="w-10 h-10" />
                                         </div>
                                         <div className="flex flex-col items-center gap-1">
-                                            <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Girl</span>
-                                            <span className="text-3xl text-cotton-rose" style={{ fontFamily: 'Aref Ruqaa, serif' }}>بنت</span>
+                                            <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Little Princess</span>
+                                            <span className="text-3xl text-cotton-rose" style={{ fontFamily: 'Aref Ruqaa, serif' }}>الأميرة الصغيرة</span>
                                         </div>
                                         <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petite Princesse</div>
                                     </motion.button>
@@ -135,7 +135,7 @@ export default function VotingSystem({ onVote, votes = [] }) {
                                     {/* Boy Progress */}
                                     <div className="space-y-3">
                                         <div className="flex justify-between font-serif text-sm tracking-widest uppercase text-gray-600">
-                                            <span>Team Boy</span>
+                                            <span>Little Prince / الأمير الصغير</span>
                                             <span>{boyPercent}%</span>
                                         </div>
                                         <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
@@ -151,7 +151,7 @@ export default function VotingSystem({ onVote, votes = [] }) {
                                     {/* Girl Progress */}
                                     <div className="space-y-3">
                                         <div className="flex justify-between font-serif text-sm tracking-widest uppercase text-gray-600">
-                                            <span>Team Girl</span>
+                                            <span>Little Princess / الأميرة الصغيرة</span>
                                             <span>{girlPercent}%</span>
                                         </div>
                                         <div className="h-2 w-full bg-gray-100 rounded-full overflow-hidden">
