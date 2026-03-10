@@ -79,16 +79,21 @@ export default function Countdown({ targetDate, onComplete }) {
 
     const TimeBlock = ({ value, label, delay, colorClass }) => (
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay, duration: 0.5 }}
-            className="flex flex-col items-center"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 1, delay }}
+            className="flex flex-col items-center gap-4 md:gap-6"
         >
-            <div className={`balloon-3d text-6xl md:text-8xl lg:text-9xl mb-4 transition-all duration-500 font-bold ${colorClass}`}>
-                {value.toString().padStart(2, '0')}
+            <div className={`balloon-3d ${colorClass} w-24 h-24 sm:w-28 sm:h-28 md:w-40 md:h-40 flex items-center justify-center`}>
+                <span className="font-sans text-4xl sm:text-5xl md:text-8xl font-black text-white drop-shadow-lg">
+                    {String(value).padStart(2, '0')}
+                </span>
             </div>
-            <div className="bg-white/40 px-4 py-1 rounded-full text-[10px] md:text-xs tracking-[0.3em] uppercase text-gray-500 backdrop-blur-sm">
-                {label}
+            <div className="glass px-4 md:px-8 py-1.5 md:py-3 rounded-full shadow-sm text-center">
+                <div className="font-sans text-[10px] md:text-xs tracking-[0.3em] uppercase font-bold text-gray-500">
+                    {label}
+                </div>
             </div>
         </motion.div>
     );
@@ -111,15 +116,18 @@ export default function Countdown({ targetDate, onComplete }) {
                     <p className="font-handwriting text-3xl md:text-4xl text-rose-gold opacity-80 italic animate-pulse">
                         Le voyage se rapproche de son but...
                     </p>
+                    <p className="text-3xl md:text-5xl text-gray-500 font-normal" style={{ fontFamily: 'Aref Ruqaa, serif' }}>
+                        الرحلة تقترب من هدفها... استعدوا للهبوط
+                    </p>
                     <h2 className="font-sans text-xs tracking-[0.5em] uppercase font-bold text-gray-400">Préparez-vous à l'atterrissage</h2>
                 </motion.div>
 
                 {/* Using a grid to ensure alignment on mobile */}
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-12 lg:gap-20 max-w-5xl mx-auto items-center justify-items-center">
-                    <TimeBlock value={timeLeft.days ?? 0} label="Jours" delay={0.2} colorClass="balloon-3d-pink" />
-                    <TimeBlock value={timeLeft.hours ?? 0} label="Heures" delay={0.3} colorClass="balloon-3d-blue" />
-                    <TimeBlock value={timeLeft.minutes ?? 0} label="Minutes" delay={0.4} colorClass="balloon-3d-pink" />
-                    <TimeBlock value={timeLeft.seconds ?? 0} label="Secondes" delay={0.5} colorClass="balloon-3d-blue" />
+                    <TimeBlock value={timeLeft.days ?? 0} label={<div className="flex flex-col items-center"><span>Jours</span><span style={{ fontFamily: 'Aref Ruqaa, serif' }}>أيام</span></div>} delay={0.2} colorClass="balloon-3d-pink" />
+                    <TimeBlock value={timeLeft.hours ?? 0} label={<div className="flex flex-col items-center"><span>Heures</span><span style={{ fontFamily: 'Aref Ruqaa, serif' }}>ساعات</span></div>} delay={0.3} colorClass="balloon-3d-blue" />
+                    <TimeBlock value={timeLeft.minutes ?? 0} label={<div className="flex flex-col items-center"><span>Minutes</span><span style={{ fontFamily: 'Aref Ruqaa, serif' }}>دقائق</span></div>} delay={0.4} colorClass="balloon-3d-pink" />
+                    <TimeBlock value={timeLeft.seconds ?? 0} label={<div className="flex flex-col items-center"><span>Secondes</span><span style={{ fontFamily: 'Aref Ruqaa, serif' }}>ثواني</span></div>} delay={0.5} colorClass="balloon-3d-blue" />
                 </div>
             </div>
         </section>

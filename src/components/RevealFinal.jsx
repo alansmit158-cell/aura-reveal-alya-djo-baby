@@ -66,8 +66,9 @@ export default function RevealFinal({ result = 'boy' }) {
                                 className="w-32 h-32 md:w-48 md:h-48 object-contain mb-4 relative z-10"
                             />
 
-                            <span className="font-serif text-sm tracking-[0.6em] uppercase text-rose-gold mb-2 relative z-10">THE MOMENT</span>
+                            <span className="font-serif text-sm tracking-[0.6em] uppercase text-rose-gold mb-1 relative z-10">THE MOMENT</span>
                             <span className="font-sans text-2xl tracking-[0.3em] font-black text-gray-700 uppercase relative z-10">IS HERE</span>
+                            <span className="text-2xl text-gray-500 mt-2 relative z-10" style={{ fontFamily: 'Aref Ruqaa, serif' }}>لقد حانت اللحظة</span>
                             <div className="absolute -bottom-8 w-1 h-32 bg-gradient-to-t from-transparent via-rose-gold/20 to-transparent" />
                         </motion.div>
 
@@ -78,12 +79,22 @@ export default function RevealFinal({ result = 'boy' }) {
                                 onClick={triggerReveal}
                                 className="bg-white border-2 border-rose-gold/30 px-16 py-5 rounded-full font-serif text-xl text-rose-gold shadow-2xl backdrop-blur-md hover:border-rose-gold transition-all"
                             >
-                                Toucher pour Révéler la Magie
+                                <span className="font-serif text-xl md:text-2xl text-rose-gold group-hover:text-foreground transition-colors relative z-10">
+                                    Toucher pour Révéler la Magie
+                                </span>
+                                <span className="text-2xl md:text-3xl text-gray-500 font-normal relative z-10" style={{ fontFamily: 'Aref Ruqaa, serif' }}>
+                                    المس هنا لكشف المفاجأة
+                                </span>
                             </motion.button>
 
-                            <p className="font-handwriting text-4xl text-rose-gold animate-bounce opacity-80">
-                                Notre secret sort enfin des nuages...
-                            </p>
+                            <div className="space-y-4">
+                                <p className="font-handwriting text-3xl md:text-5xl text-rose-gold/80 italic drop-shadow-sm">
+                                    Notre secret sort enfin des nuages...
+                                </p>
+                                <p className="text-4xl md:text-5xl text-gray-500 font-normal" style={{ fontFamily: 'Aref Ruqaa, serif' }}>
+                                    سرنا يخرج أخيراً من بين السحاب...
+                                </p>
+                            </div>
                         </div>
                     </motion.div>
                 ) : (
@@ -112,6 +123,9 @@ export default function RevealFinal({ result = 'boy' }) {
                                         <h1 className={`font-serif text-6xl md:text-9xl font-black drop-shadow-2xl ${result === 'boy' ? 'text-powder-blue' : 'text-cotton-rose'}`}>
                                             {result === 'boy' ? 'Petit Prince' : 'Petite Princesse'}
                                         </h1>
+                                        <h2 className="text-5xl md:text-7xl text-gray-500 font-normal" style={{ fontFamily: 'Aref Ruqaa, serif' }}>
+                                            {result === 'boy' ? 'إنه ولد' : 'إنها بنت'}
+                                        </h2>
                                     </motion.div>
 
                                     {/* Reveal Mascot: Professional Watercolor Asset */}

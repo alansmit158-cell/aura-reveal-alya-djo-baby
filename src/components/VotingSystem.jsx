@@ -43,10 +43,19 @@ export default function VotingSystem({ onVote, votes = [] }) {
                     <h2 className="font-serif text-4xl md:text-5xl text-foreground font-light">
                         {hasVoted ? "Merci pour votre vote !" : "Faites vos pronostics"}
                     </h2>
+                    <p className="text-3xl md:text-5xl text-gray-500 font-normal" style={{ fontFamily: 'Aref Ruqaa, serif' }}>
+                        {hasVoted ? "شكراً لتصويتكم !" : "شاركوا توقعاتكم"}
+                    </p>
                     <p className="font-body text-gray-500 max-w-md mx-auto">
                         {hasVoted
                             ? `Vous avez choisi ${selection === 'boy' ? 'un Petit Prince' : 'une Petite Princesse'}. Voici les tendances actuelles :`
                             : "Alors, équipe Bleu ou équipe Rose ? Laissez parler votre intuition."
+                        }
+                    </p>
+                    <p className="font-handwriting text-xl md:text-2xl text-rose-gold/80 italic">
+                        {hasVoted
+                            ? `You chose ${selection === 'boy' ? 'a Little Prince' : 'a Little Princess'}. Current trends:`
+                            : "Blue team or Pink team? Let your intuition speak."
                         }
                     </p>
                 </motion.div>
@@ -59,14 +68,17 @@ export default function VotingSystem({ onVote, votes = [] }) {
                                 <motion.div
                                     initial={{ opacity: 0 }}
                                     animate={{ opacity: 1 }}
-                                    className="max-w-md mx-auto w-full"
+                                    className="max-w-md mx-auto w-full space-y-4"
                                 >
-                                    <label className="block font-serif text-xs uppercase tracking-[0.3em] text-gray-400 mb-4 text-center">Votre Nom</label>
+                                    <div className="space-y-1">
+                                        <label className="block font-serif text-xs uppercase tracking-[0.3em] text-gray-400 text-center">Votre Nom / Your Name</label>
+                                        <label className="block text-xl md:text-2xl text-gray-500 text-center" style={{ fontFamily: 'Aref Ruqaa, serif' }}>اسمك بالكامل</label>
+                                    </div>
                                     <input
                                         type="text"
                                         value={name}
                                         onChange={(e) => setName(e.target.value)}
-                                        placeholder="Entrez votre nom ici..."
+                                        placeholder="Entrez votre nom ici... / Enter your name..."
                                         className="w-full glass bg-white/50 border border-rose-gold/20 rounded-2xl px-6 py-4 text-center outline-none focus:ring-2 focus:ring-rose-gold/30 transition-all font-serif text-lg text-gray-700"
                                     />
                                 </motion.div>
@@ -84,7 +96,10 @@ export default function VotingSystem({ onVote, votes = [] }) {
                                         <div className="w-20 h-20 rounded-full bg-powder-blue/20 flex items-center justify-center text-powder-blue group-hover:scale-110 transition-transform">
                                             <Baby className="w-10 h-10" />
                                         </div>
-                                        <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Boy</span>
+                                        <div className="flex flex-col items-center gap-1">
+                                            <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Boy</span>
+                                            <span className="text-3xl text-powder-blue" style={{ fontFamily: 'Aref Ruqaa, serif' }}>ولد</span>
+                                        </div>
                                         <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petit Prince</div>
                                     </motion.button>
 
@@ -100,7 +115,10 @@ export default function VotingSystem({ onVote, votes = [] }) {
                                         <div className="w-20 h-20 rounded-full bg-cotton-rose/20 flex items-center justify-center text-cotton-rose group-hover:scale-110 transition-transform">
                                             <Heart className="w-10 h-10" />
                                         </div>
-                                        <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Girl</span>
+                                        <div className="flex flex-col items-center gap-1">
+                                            <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Girl</span>
+                                            <span className="text-3xl text-cotton-rose" style={{ fontFamily: 'Aref Ruqaa, serif' }}>بنت</span>
+                                        </div>
                                         <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petite Princesse</div>
                                     </motion.button>
                                 </div>
@@ -149,6 +167,9 @@ export default function VotingSystem({ onVote, votes = [] }) {
 
                                 <p className="text-sm font-handwriting text-2xl text-rose-gold opacity-80 pt-4">
                                     Merci d'avoir partagé ce moment avec nous...
+                                </p>
+                                <p className="text-3xl text-gray-500 font-normal" style={{ fontFamily: 'Aref Ruqaa, serif' }}>
+                                    شكراً لمشاركتكم هذه اللحظة معنا...
                                 </p>
                             </motion.div>
                         )}

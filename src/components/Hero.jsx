@@ -45,13 +45,19 @@ export default function Hero() {
                         <Star className="absolute -top-12 -left-4 w-6 h-6 text-rose-gold fill-rose-gold/20 animate-pulse hidden sm:block" />
                         <Star className="absolute -bottom-12 -right-4 w-5 h-5 text-rose-gold fill-rose-gold/20 animate-pulse hidden sm:block" style={{ animationDelay: '1.5s' }} />
 
-                        <p className="font-handwriting text-2xl md:text-5xl text-rose-gold mb-4 md:mb-6 drop-shadow-sm">
+                        <p className="font-handwriting text-2xl md:text-5xl text-rose-gold mb-2 md:mb-4 drop-shadow-sm">
                             To My Beautiful Family...
+                        </p>
+                        <p className="text-3xl md:text-5xl text-gray-500 mb-6 font-normal" style={{ fontFamily: 'Aref Ruqaa, serif' }}>
+                            إلى عائلتي الجميلة...
                         </p>
                         <h1 className="font-sans text-3xl md:text-8xl lg:text-9xl font-black tracking-tighter text-gray-800 leading-[1] uppercase">
                             WHAT WILL <br />
                             <span className="text-gradient-rose italic font-extralight block mt-1">BABY BE?</span>
                         </h1>
+                        <p className="text-4xl md:text-6xl text-rose-gold mt-4 font-normal" style={{ fontFamily: 'Aref Ruqaa, serif' }}>
+                            ماذا سيكون المولود؟
+                        </p>
                     </motion.div>
                 </div>
 
