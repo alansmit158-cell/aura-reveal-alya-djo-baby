@@ -118,7 +118,7 @@ export default function RevealFinal({ result = 'boy' }) {
                                 >
                                     <motion.div className="space-y-4">
                                         <h2 className="font-serif text-3xl md:text-5xl uppercase tracking-[0.4em] font-light text-gray-400">
-                                            C'est Un...
+                                            {result === 'boy' ? 'Little Prince' : 'Little Princess'}
                                         </h2>
                                         <h1 className={`font-serif text-6xl md:text-9xl font-black drop-shadow-2xl ${result === 'boy' ? 'text-powder-blue' : 'text-cotton-rose'}`}>
                                             {result === 'boy' ? 'Little Prince' : 'Little Princess'}

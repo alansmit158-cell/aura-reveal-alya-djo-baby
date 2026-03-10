@@ -48,7 +48,7 @@ export default function VotingSystem({ onVote, votes = [] }) {
                     </p>
                     <p className="font-body text-gray-500 max-w-md mx-auto">
                         {hasVoted
-                            ? `Vous avez choisi ${selection === 'boy' ? 'un Petit Prince' : 'une Petite Princesse'}. Voici les tendances actuelles :`
+                            ? `Vous avez choisi un ${selection === 'boy' ? 'Little Prince' : 'Little Princess'}. Voici les tendances actuelles :`
                             : "Alors, équipe Bleu ou équipe Rose ? Laissez parler votre intuition."
                         }
                     </p>
@@ -100,7 +100,7 @@ export default function VotingSystem({ onVote, votes = [] }) {
                                             <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Little Prince</span>
                                             <span className="text-3xl text-powder-blue" style={{ fontFamily: 'Aref Ruqaa, serif' }}>الأمير الصغير</span>
                                         </div>
-                                        <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petit Prince</div>
+                                        <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Little Prince</div>
                                     </motion.button>
 
                                     {/* Girl Vote Card */}
@@ -119,7 +119,7 @@ export default function VotingSystem({ onVote, votes = [] }) {
                                             <span className="font-serif text-2xl tracking-widest uppercase text-gray-700">Little Princess</span>
                                             <span className="text-3xl text-cotton-rose" style={{ fontFamily: 'Aref Ruqaa, serif' }}>الأميرة الصغيرة</span>
                                         </div>
-                                        <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Petite Princesse</div>
+                                        <div className="text-xs tracking-[0.2em] text-gray-400">Équipe Little Princess</div>
                                     </motion.button>
                                 </div>
                             </div>
