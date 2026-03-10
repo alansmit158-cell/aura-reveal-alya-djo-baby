@@ -45,6 +45,7 @@ export default function Countdown({ targetDate, onComplete }) {
             let res = { days: 0, hours: 0, minutes: 0, seconds: 0 };
 
             if (difference > 0) {
+                // Calculate components strictly from difference
                 res = {
                     days: Math.floor(difference / (1000 * 60 * 60 * 24)),
                     hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
@@ -60,7 +61,10 @@ export default function Countdown({ targetDate, onComplete }) {
                     }
                 }
             } else if (onComplete) {
+                // Force state update to 0 before completing
+                setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
                 onComplete();
+                return;
             }
 
             setTimeLeft(res);

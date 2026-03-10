@@ -50,16 +50,23 @@ function App() {
     }
   };
 
-  const handleConfigChange = async (updates) => {
+  // Watch for reveal date changes to trigger reveal automatically
+  useEffect(() => {
+    if (revealDate && new Date(revealDate) <= new Date() && step !== 'revealed') {
+      setStep('revealed');
+    }
+  }, [revealDate, step]);
+
+  const handleConfigChange = async (newConfig) => {
     try {
       const res = await fetch(`${API_BASE}/config`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updates)
+        body: JSON.stringify(newConfig)
       });
       const data = await res.json();
-      setRevealResult(data.revealResult);
-      setRevealDate(data.revealDate);
+      if (data.revealResult) setRevealResult(data.revealResult);
+      if (data.revealDate) setRevealDate(data.revealDate);
     } catch (err) {
       console.error("Config error:", err);
     }
