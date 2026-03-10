@@ -38,7 +38,7 @@ export default function AudioPlayer({ isRevealing = false, result = 'boy' }) {
             <audio
                 ref={backgroundMusicRef}
                 loop
-                src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+                src="/Empty Project (2).mp3"
             />
             {/* Arabic Reveal Song Placeholder */}
             <audio
