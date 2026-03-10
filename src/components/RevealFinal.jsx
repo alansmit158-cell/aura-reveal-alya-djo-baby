@@ -121,10 +121,10 @@ export default function RevealFinal({ result = 'boy' }) {
                                             C'est Un...
                                         </h2>
                                         <h1 className={`font-serif text-6xl md:text-9xl font-black drop-shadow-2xl ${result === 'boy' ? 'text-powder-blue' : 'text-cotton-rose'}`}>
-                                            {result === 'boy' ? 'Petit Prince' : 'Petite Princesse'}
+                                            {result === 'boy' ? 'Little Prince' : 'Little Princess'}
                                         </h1>
                                         <h2 className="text-5xl md:text-7xl text-gray-500 font-normal" style={{ fontFamily: 'Aref Ruqaa, serif' }}>
-                                            {result === 'boy' ? 'إنه ولد' : 'إنها بنت'}
+                                            {result === 'boy' ? 'الأمير الصغير' : 'الأميرة الصغيرة'}
                                         </h2>
                                     </motion.div>
 
