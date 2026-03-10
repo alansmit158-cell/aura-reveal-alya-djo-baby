@@ -80,20 +80,24 @@ export default function Hero() {
             <div className="absolute -bottom-10 left-[10%] w-64 h-20 bg-white/30 blur-3xl rounded-full" />
             <div className="absolute top-[20%] right-[-5%] w-80 h-32 bg-white/20 blur-3xl rounded-full" />
 
-            {/* Scroll Indicator */}
+            {/* Scroll Indicator - Animated Arrow */}
             <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 3, duration: 1 }}
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+                className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1"
             >
-                <span className="font-sans text-[8px] tracking-[0.4em] uppercase text-gray-400 font-bold">Scroll</span>
+                <span className="font-sans text-[9px] tracking-[0.5em] uppercase text-gray-400 font-bold mb-1">Scroll</span>
                 <motion.div
-                    animate={{ y: [0, 8, 0] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                    className="w-5 h-8 border-2 border-gray-300 rounded-full flex justify-center p-1"
+                    animate={{ y: [0, 12, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                    className="flex flex-col items-center"
                 >
-                    <div className="w-1.5 h-1.5 bg-rose-gold rounded-full" />
+                    {/* Double Chevron Arrow */}
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 10 L20 22 L32 10" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" opacity="0.4" />
+                        <path d="M8 20 L20 32 L32 20" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                 </motion.div>
             </motion.div>
         </section>
