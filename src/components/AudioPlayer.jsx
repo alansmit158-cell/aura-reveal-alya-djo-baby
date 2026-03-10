@@ -1,39 +1,54 @@
 import { useState, useRef, useEffect } from 'react';
-import { Volume2, VolumeX, Music } from 'lucide-react';
+import { Volume2, VolumeX } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function AudioPlayer({ isRevealing = false }) {
     const [isPlaying, setIsPlaying] = useState(false);
     const audioRef = useRef(null);
+    const isPlayingRef = useRef(false); // stable ref for use inside listeners
 
-    // Auto-play attempt on first interaction
+    // Register ONE interaction listener on mount only
     useEffect(() => {
-        const handleInteraction = () => {
-            if (!isPlaying && audioRef.current) {
+        const startAudio = () => {
+            if (!isPlayingRef.current && audioRef.current) {
                 audioRef.current.play()
-                    .then(() => setIsPlaying(true))
-                    .catch(e => console.log("Autoplay still blocked", e));
+                    .then(() => {
+                        isPlayingRef.current = true;
+                        setIsPlaying(true);
+                    })
+                    .catch(e => console.log("Autoplay blocked:", e));
             }
-            window.removeEventListener('click', handleInteraction);
-            window.removeEventListener('touchstart', handleInteraction);
+            // Remove after first successful interaction
+            window.removeEventListener('click', startAudio);
+            window.removeEventListener('touchstart', startAudio);
+            window.removeEventListener('scroll', startAudio);
         };
 
-        window.addEventListener('click', handleInteraction);
-        window.addEventListener('touchstart', handleInteraction);
+        window.addEventListener('click', startAudio, { once: true });
+        window.addEventListener('touchstart', startAudio, { once: true });
+        window.addEventListener('scroll', startAudio, { once: true });
 
         return () => {
-            window.removeEventListener('click', handleInteraction);
-            window.removeEventListener('touchstart', handleInteraction);
+            window.removeEventListener('click', startAudio);
+            window.removeEventListener('touchstart', startAudio);
+            window.removeEventListener('scroll', startAudio);
         };
-    }, [isPlaying]);
+    }, []); // empty deps = runs once on mount
 
-    const toggleAudio = () => {
-        if (isPlaying) {
+    const toggleAudio = (e) => {
+        e.stopPropagation(); // prevent the click from re-triggering startAudio
+        if (isPlayingRef.current) {
             audioRef.current?.pause();
+            isPlayingRef.current = false;
+            setIsPlaying(false);
         } else {
-            audioRef.current?.play().catch(e => console.log("Audio playback blocked", e));
+            audioRef.current?.play()
+                .then(() => {
+                    isPlayingRef.current = true;
+                    setIsPlaying(true);
+                })
+                .catch(e => console.log("Playback blocked:", e));
         }
-        setIsPlaying(!isPlaying);
     };
 
     return (
@@ -48,7 +63,7 @@ export default function AudioPlayer({ isRevealing = false }) {
                 animate={isRevealing && isPlaying ? { scale: [1, 1.2, 1] } : {}}
                 transition={{ duration: 1, repeat: Infinity }}
                 onClick={toggleAudio}
-                className="w-14 h-14 glass rounded-full flex items-center justify-center text-rose-gold shadow-rose-gold/20 shadow-xl group"
+                className="w-14 h-14 glass rounded-full flex items-center justify-center text-rose-gold shadow-rose-gold/20 shadow-xl relative"
             >
                 <AnimatePresence mode="wait">
                     {isPlaying ? (
@@ -62,7 +77,6 @@ export default function AudioPlayer({ isRevealing = false }) {
                     )}
                 </AnimatePresence>
 
-                {/* Glow effect during reveal */}
                 {isRevealing && isPlaying && (
                     <div className="absolute inset-0 bg-rose-gold/20 rounded-full animate-ping" />
                 )}
