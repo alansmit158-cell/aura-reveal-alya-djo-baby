@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,900;1,400&family=Great+Vibes&family=Lora:ital,wght@0,400;1,400&family=Inter:wght@400;700;900&family=Amiri:ital,wght@0,400;0,700;1,400;1,700&family=Aref+Ruqaa:wght@400;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-nacre: #F8F5F2;
+  --color-rose-gold: #D4AF37;
+  --color-powder-blue: #B0E0E6;
+  --color-cotton-rose: #FFC0CB;
+  --color-off-white: #FDFDFD;
+
+  --font-serif: "Playfair Display", serif;
+  --font-handwriting: "Great Vibes", cursive;
+  --font-body: "Inter", sans-serif;
+}
+
+:root {
+  --background: var(--color-nacre);
+  --foreground: #2D2424;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+  color: var(--foreground);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+}
+
+.watercolor-bg {
+  background:
+    radial-gradient(at 0% 0%, rgba(176, 224, 230, 0.4) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(255, 192, 203, 0.4) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(176, 224, 230, 0.4) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(255, 192, 203, 0.4) 0px, transparent 50%);
+}
+
+.balloon-3d {
+  color: white;
+  text-shadow:
+    0 1px 0 #ccc,
+    0 2px 0 #c9c9c9,
+    0 3px 0 #bbb,
+    0 4px 0 #b9b9b9,
+    0 5px 0 #aaa,
+    0 6px 1px rgba(0, 0, 0, .1),
+    0 0 5px rgba(0, 0, 0, .1),
+    0 1px 3px rgba(0, 0, 0, .3),
+    0 3px 5px rgba(0, 0, 0, .2),
+    0 5px 10px rgba(0, 0, 0, .25),
+    0 10px 10px rgba(0, 0, 0, .2),
+    0 20px 20px rgba(0, 0, 0, .15);
+}
+
+.balloon-3d-pink {
+  text-shadow:
+    0 1px 0 #ffb6c1,
+    0 2px 0 #ffb6c1,
+    0 3px 0 #ffb6c1,
+    0 4px 0 #ffb6c1,
+    0 5px 0 #ffb6c1;
+}
+
+.balloon-3d-blue {
+  text-shadow:
+    0 1px 0 #add8e6,
+    0 2px 0 #add8e6,
+    0 3px 0 #add8e6,
+    0 4px 0 #add8e6,
+    0 5px 0 #add8e6;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+.text-gradient-rose {
+  background: linear-gradient(to right, #D4AF37, #E6BE8A);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-nacre);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(212, 175, 55, 0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(212, 175, 55, 0.5);
+}
