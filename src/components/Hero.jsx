@@ -79,6 +79,23 @@ export default function Hero() {
             {/* Decorative Cloud elements */}
             <div className="absolute -bottom-10 left-[10%] w-64 h-20 bg-white/30 blur-3xl rounded-full" />
             <div className="absolute top-[20%] right-[-5%] w-80 h-32 bg-white/20 blur-3xl rounded-full" />
+
+            {/* Scroll Indicator */}
+            <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 3, duration: 1 }}
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+            >
+                <span className="font-sans text-[8px] tracking-[0.4em] uppercase text-gray-400 font-bold">Scroll</span>
+                <motion.div
+                    animate={{ y: [0, 8, 0] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="w-5 h-8 border-2 border-gray-300 rounded-full flex justify-center p-1"
+                >
+                    <div className="w-1.5 h-1.5 bg-rose-gold rounded-full" />
+                </motion.div>
+            </motion.div>
         </section>
     );
 }
