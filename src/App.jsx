@@ -28,7 +28,8 @@ function App() {
         if (data.revealDate) {
           setRevealDate(data.revealDate);
           // Auto-trigger reveal if date is already passed
-          if (new Date(data.revealDate) <= new Date()) {
+          const target = new Date(data.revealDate);
+          if (!isNaN(target) && target <= new Date()) {
             setStep('revealed');
           }
         }
