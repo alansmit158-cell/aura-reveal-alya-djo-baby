@@ -2,11 +2,24 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Baby, Heart } from 'lucide-react';
 
-export default function VotingSystem({ onVote }) {
+export default function VotingSystem({ onVote, votes = [] }) {
     const [hasVoted, setHasVoted] = useState(false);
     const [name, setName] = useState('');
-    const [counts, setCounts] = useState({ boy: 55, girl: 45 }); // Mock stats for visuals
     const [selection, setSelection] = useState(null);
+
+    // Calculate real stats from the votes prop
+    const boyVotes = votes.filter(v => v.choice === 'boy').length;
+    const girlVotes = votes.filter(v => v.choice === 'girl').length;
+    const total = votes.length || 1; // Avoid division by zero
+
+    // Fallback to a balanced view if no votes yet (for aesthetics)
+    let boyPercent = Math.round((boyVotes / total) * 100);
+    let girlPercent = Math.round((girlVotes / total) * 100);
+
+    if (votes.length === 0) {
+        boyPercent = 50;
+        girlPercent = 50;
+    }
 
     const handleVote = (type) => {
         if (!name.trim()) return;
@@ -16,10 +29,6 @@ export default function VotingSystem({ onVote }) {
             onVote({ name: name.trim(), choice: type });
         }
     };
-
-    const total = counts.boy + counts.girl;
-    const boyPercent = Math.round((counts.boy / total) * 100);
-    const girlPercent = Math.round((counts.girl / total) * 100);
 
     return (
         <section className="min-h-screen flex flex-col items-center justify-center px-6 py-20 bg-transparent">

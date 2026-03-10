@@ -10,15 +10,53 @@ import AudioPlayer from './components/AudioPlayer';
 import RevealFinal from './components/RevealFinal';
 import AdminPortal from './components/AdminPortal';
 
+const API_BASE = 'http://localhost:5005/api/baby-reveal/aura-reveal';
+
 function App() {
   const [step, setStep] = useState('intro'); // 'intro', 'public', 'revealed'
   const [showAdmin, setShowAdmin] = useState(window.location.hash === '#reveal-admin');
   const [revealResult, setRevealResult] = useState('boy');
   const [votes, setVotes] = useState([]); // Array of { name, choice, timestamp }
-  const revealDate = "2026-04-12T18:00:00";
+  const [revealDate, setRevealDate] = useState("2026-04-12T18:00:00");
 
-  const handleVote = (newVote) => {
-    setVotes(prev => [...prev, { ...newVote, timestamp: new Date().toISOString() }]);
+  useEffect(() => {
+    fetch(API_BASE)
+      .then(res => res.json())
+      .then(data => {
+        if (data.revealResult) setRevealResult(data.revealResult);
+        if (data.votes) setVotes(data.votes);
+        if (data.revealDate) setRevealDate(data.revealDate);
+      })
+      .catch(err => console.error("Fetch error:", err));
+  }, []);
+
+  const handleVote = async (newVote) => {
+    try {
+      const res = await fetch(`${API_BASE}/vote`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newVote)
+      });
+      const data = await res.json();
+      setVotes(data.votes);
+    } catch (err) {
+      console.error("Vote error:", err);
+    }
+  };
+
+  const handleConfigChange = async (updates) => {
+    try {
+      const res = await fetch(`${API_BASE}/config`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates)
+      });
+      const data = await res.json();
+      setRevealResult(data.revealResult);
+      setRevealDate(data.revealDate);
+    } catch (err) {
+      console.error("Config error:", err);
+    }
   };
 
   // Quick hash navigation for testing/admin
@@ -34,8 +72,9 @@ function App() {
     return (
       <Layout>
         <AdminPortal
-          onRevealChange={(res) => setRevealResult(res)}
+          onConfigChange={handleConfigChange}
           currentResult={revealResult}
+          currentDate={revealDate}
           votes={votes}
         />
       </Layout>
@@ -66,7 +105,7 @@ function App() {
             className="space-y-32 pb-32"
           >
             <Hero />
-            <VotingSystem onVote={handleVote} />
+            <VotingSystem onVote={handleVote} votes={votes} />
             <Countdown targetDate={revealDate} onComplete={() => setStep('revealed')} />
           </motion.div>
         )}

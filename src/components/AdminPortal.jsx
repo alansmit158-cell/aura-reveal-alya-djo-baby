@@ -2,18 +2,30 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Lock, Baby, Heart, BarChart3, Settings } from 'lucide-react';
 
-export default function AdminPortal({ onRevealChange, currentResult, votes = [] }) {
+export default function AdminPortal({ onConfigChange, currentResult, currentDate, votes = [] }) {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
     const handleLogin = (e) => {
         e.preventDefault();
-        if (password === 'aura2026') { // Simple password for demo
+        if (password === 'aura2026') {
             setIsAuthenticated(true);
         } else {
             setError('Mot de passe incorrect');
             setTimeout(() => setError(''), 2000);
+        }
+    };
+
+    const handleResultChange = (res) => {
+        if (onConfigChange) {
+            onConfigChange({ revealResult: res, revealDate: currentDate });
+        }
+    };
+
+    const handleDateChange = (e) => {
+        if (onConfigChange) {
+            onConfigChange({ revealDate: e.target.value, revealResult: currentResult });
         }
     };
 
@@ -95,14 +107,14 @@ export default function AdminPortal({ onRevealChange, currentResult, votes = [] 
 
                         <div className="flex gap-4">
                             <button
-                                onClick={() => onRevealChange('boy')}
+                                onClick={() => handleResultChange('boy')}
                                 className={`flex-1 flex flex-col items-center gap-4 p-6 rounded-3xl border transition-all ${currentResult === 'boy' ? 'bg-powder-blue text-white shadow-lg border-transparent' : 'bg-white/50 border-gray-100 text-gray-400'}`}
                             >
                                 <Baby className="w-8 h-8" />
                                 <span className="font-serif text-lg">C'est un Garçon</span>
                             </button>
                             <button
-                                onClick={() => onRevealChange('girl')}
+                                onClick={() => handleResultChange('girl')}
                                 className={`flex-1 flex flex-col items-center gap-4 p-6 rounded-3xl border transition-all ${currentResult === 'girl' ? 'bg-cotton-rose text-white shadow-lg border-transparent' : 'bg-white/50 border-gray-100 text-gray-400'}`}
                             >
                                 <Heart className="w-8 h-8" />
@@ -123,7 +135,8 @@ export default function AdminPortal({ onRevealChange, currentResult, votes = [] 
                                 <label className="text-xs font-serif uppercase tracking-widest text-gray-400 px-2">Date du Reveal</label>
                                 <input
                                     type="datetime-local"
-                                    defaultValue="2026-04-12T18:00"
+                                    value={currentDate}
+                                    onChange={handleDateChange}
                                     className="w-full glass bg-white/50 border border-gray-100 rounded-2xl px-6 py-4 outline-none focus:ring-2 focus:ring-rose-gold/30 transition-all font-serif"
                                 />
                             </div>
