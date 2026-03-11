@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
+import { Instagram, Youtube, Facebook, MessageCircle, Link as LinkIcon } from 'lucide-react';
 
 export default function RevealFinal({ result = 'boy' }) {
     const [isExploded, setIsExploded] = useState(false);
@@ -36,9 +37,9 @@ export default function RevealFinal({ result = 'boy' }) {
     };
 
     return (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-nacre overflow-hidden">
-
-            <AnimatePresence>
+        <div className="fixed inset-0 z-[100] flex flex-col bg-nacre overflow-y-auto overflow-x-hidden">
+            <div className="flex-1 flex flex-col items-center justify-center min-h-screen relative py-8 px-4">
+                <AnimatePresence>
                 {!isExploded ? (
                     <motion.div
                         key="pre-reveal"
@@ -166,6 +167,38 @@ export default function RevealFinal({ result = 'boy' }) {
                     </>
                 )}
             </AnimatePresence>
+            </div>
+
+            <footer className="w-full py-8 px-4 border-t border-rose-gold/20 flex flex-col items-center justify-center gap-4 mt-auto">
+                <div className="flex flex-col items-center gap-4 mb-2">
+                    <div className="flex flex-col items-center gap-2 text-center">
+                        <span className="text-gray-500 font-serif italic text-sm">Faites tout ce qui est digital avec</span>
+                        <span className="text-rose-gold font-serif font-bold tracking-widest uppercase mt-0 text-xl">Aura Digital</span>
+                    </div>
+                </div>
+
+                <div className="flex gap-6 items-center">
+                    <a href="https://www.instagram.com/aura_____digital/" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-rose-gold hover:scale-110 transition-all" aria-label="Instagram">
+                        <Instagram className="w-5 h-5" />
+                    </a>
+                    <a href="https://www.facebook.com/profile.php?id=61588511615603" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-rose-gold hover:scale-110 transition-all" aria-label="Facebook">
+                        <Facebook className="w-5 h-5" />
+                    </a>
+                    <a href="https://www.youtube.com/@auradigital2026" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-rose-gold hover:scale-110 transition-all" aria-label="YouTube">
+                        <Youtube className="w-5 h-5" />
+                    </a>
+                    <a href="https://api.whatsapp.com/send?phone=21629574856" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-rose-gold hover:scale-110 transition-all" aria-label="WhatsApp">
+                        <MessageCircle className="w-5 h-5" />
+                    </a>
+                    <a href="https://linktr.ee/Aura_Digital" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-rose-gold hover:scale-110 transition-all" aria-label="Linktree">
+                        <LinkIcon className="w-5 h-5" />
+                    </a>
+                </div>
+
+                <div className="text-gray-400/60 text-xs font-sans mt-2">
+                    © {new Date().getFullYear()} Aura Digital. Tous droits réservés.
+                </div>
+            </footer>
         </div>
     );
 }
